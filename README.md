@@ -1,2 +1,7 @@
-# projet_datamining
-Dépôt du projet de Data Mining 
+# Projet Data Mining 
+####### Auteur : Philippe CHARRAT et Clément CORNU
+
+## Objectif : 
+Création d'un système de recommendation en python. 
+
+## En cours 
