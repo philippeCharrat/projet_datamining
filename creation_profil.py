@@ -11,6 +11,7 @@ import cgi,cgitb,json
 cgitb.enable()
 form = cgi.FieldStorage()
 liste_images = []
+liste_images_unlike = []
 liste_themes = []
 orientation_H = 0
 orientation_V = 0
@@ -20,21 +21,31 @@ if form.getvalue("nom_utilisateur"):
     username = form.getvalue("nom_utilisateur")
 if form.getvalue("image_0"):
     liste_images.append(form.getvalue("image_0"))
+else:
+    liste_images_unlike.append(form.getvalue("image_0"))
 if form.getvalue("image_1"):
     liste_images.append(form.getvalue("image_1"))
+else:
+    liste_images_unlike.append(form.getvalue("image_1"))
 if form.getvalue("image_2"):
     liste_images.append(form.getvalue("image_2"))
+else:
+    liste_images_unlike.append(form.getvalue("image_2"))
 if form.getvalue("image_3"):
     liste_images.append(form.getvalue("image_3"))
+else:
+    liste_images_unlike.append(form.getvalue("image_3"))
 if form.getvalue("image_4"):
     liste_images.append(form.getvalue("image_4"))
+else:
+    liste_images_unlike.append(form.getvalue("image_4"))
 
 with open('data.json') as json_file :
     data = json.load(json_file)
     data = data["data"]
     for p in data : 
         if (p["nom"] in liste_images) : 
-            if (p["theme"] not in liste_images) : 
+            if (p["theme"] not in liste_themes) : 
                 liste_themes.append(p["theme"])
             if(p["orientation"] == "portrait") : 
                 orientation_V += 1
@@ -51,7 +62,7 @@ print("Content-type: text/html; charset=utf-8\n")
 html ="""
 <html>
     <body>
-       <h1> Merci """+str(username)+""", Nous avons créé votre profil. </h1>
+       <h1> Merci """+str(dico_profil_utilisateur)+""", Nous avons créé votre profil. </h1>
        Deux choix possibles : 
            <ul>
                <li> <a href=''>Etiquetage des images </a></li>
