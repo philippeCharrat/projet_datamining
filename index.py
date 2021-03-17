@@ -19,13 +19,14 @@ html ="""
     <center><h2> Formulaire de création </h2></center>
     <form method="post" action="creation_profil.py">
     <h3>Votre nom : </h3>
-    <input type='text' name="nom_utilisateur">
-    <h3>Veuillez saisir les images que vous appréciez le plus : </h3>
+    <input type='text' name="nom_utilisateur" required>
+    <h3>Veuillez sélectionner les images que vous appréciez le plus : </h3>
         <table>
             <tr>
     """
 with open('data.json') as json_file :
-    data = json.load(json_file)
+    data = json.loads(json_file.read())
+    data = data['data']
     liste = [x for x in range(len(data))]
     for i in range(5) : 
         j = random.randint(0,len(liste)-2)

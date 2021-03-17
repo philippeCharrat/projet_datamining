@@ -20,7 +20,7 @@ for filename in os.listdir("Images") :
 
 # Initialisation de la liste contenant les thèmes ---
 chaine_json = "["
-liste_element = [["montagne","Q8502"],["chat","Q146"],["homme","Q5"],["chien","Q144"],["plante","Q756"],["Q31629","sport"],["Q11424","film"],["Q838948","art"],["Q11629","peinture"]]
+liste_element = [["montagne","Q8502"],["chat","Q146"],["manga","Q8724"],["homme","Q5"],["chien","Q144"],["plante","Q756"],["Q31629","sport"],["Q11424","film"],["Q838948","art"],["Q11629","peinture"]]
 for a in range(len(liste_element)-1):
     # Execution d'une requête d'un thème de la liste
     element = liste_element[a]

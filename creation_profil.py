@@ -31,6 +31,7 @@ if form.getvalue("image_4"):
 
 with open('data.json') as json_file :
     data = json.load(json_file)
+    data = data["data"]
     for p in data : 
         if (p["nom"] in liste_images) : 
             if (p["theme"] not in liste_images) : 
@@ -54,7 +55,7 @@ html ="""
        Deux choix possibles : 
            <ul>
                <li> <a href=''>Etiquetage des images </a></li>
-               <li> <a href=''>Voir des images </a></li>
+                 <li> <a href=''>Voir des images </a></li>
            </ul>
     </body>
 </html>
