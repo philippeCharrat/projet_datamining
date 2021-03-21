@@ -10,6 +10,7 @@ import cgi, random ,json,random
 print("Content-type: text/html; charset=utf-8\n")
 image = ""
 checbox = ""
+hidden = ""
 html ="""
 <html>
     <body>
@@ -33,10 +34,9 @@ with open('data.json') as json_file :
         increment = liste[j]
         image = image+"<td><img src='"+str(data[increment]["nom"])+"'></td>"
         checbox =  checbox+"<td><input type='checkbox' name='image_"+str(i)+"' value='"+str(data[increment]["nom"])+"'></td>"
+        hidden = hidden+"<input type='hidden' name='invisible_"+str(i)+"' value='"+str(data[increment]["nom"])+"'>"
         del liste[j]
-html = html + image + "</tr><tr>"+checbox+"""
-            </tr>
-        </table>
+html = html + image + "</tr><tr>"+checbox+"</tr></table>"+hidden+"""
         <input type='submit' value='Soumettre'>
     </form>
     </body>

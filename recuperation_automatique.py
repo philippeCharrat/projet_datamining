@@ -79,13 +79,13 @@ chaine_json = "{ \"data\" :["
 liste_element = [["montagne","Q8502"],["chat","Q146"],["manga","Q8724"],["homme","Q5"],["chien","Q144"],["plante","Q756"],["sport","Q31629"],["film","Q11424"],["art","Q838948"],["peinture","Q11629"]]
 images = 0
 
-while(images<5) :
+while(images<10) :
     # Execution d'une requête d'un thème de la liste
     
     a = random.randint(0,len(liste_element)-1)
     element = liste_element[a]
     
-    query_string = "SELECT ?item ?itemLabel ?pic WHERE { ?item wdt:P31 wd:"+str(element[1])+". ?item wdt:P18 ?pic} limit 10"
+    query_string = "SELECT ?item ?itemLabel ?pic WHERE { ?item wdt:P31 wd:"+str(element[1])+". ?item wdt:P18 ?pic} limit 5"
     res = return_sparql_query_results(query_string)
     nb_elements = str(res).count("item")
     
@@ -113,11 +113,11 @@ while(images<5) :
             except:
                 descriptionisset = 0
         except:
-            pass#print("erreur : ",chaine)
+            print("erreur : ",chaine)
         if (descriptionisset != 1 ) : 
             os.remove(chaine)
         else : 
-            #print("image sauvée")
+            print("image sauvée")
             dico_image["type"]= etiquetage_taille(int(dico_image["40962"]),int(dico_image["40963"]))#ajout du type
             images += 1
             chaine_json += str(dico_image) +","
