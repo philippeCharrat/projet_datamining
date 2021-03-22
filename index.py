@@ -7,6 +7,7 @@ Created on Sat Mar 13 16:48:41 2021
 """
 import cgi, random ,json,random
 
+"Affichage du code HTML d'acceuil"
 print("Content-type: text/html; charset=utf-8\n")
 image = ""
 checbox = ""
@@ -25,6 +26,8 @@ html ="""
         <table>
             <tr>
     """
+
+"Choix au hasard de 5 images dans celles disponibles dans le fichier data.json"
 with open('data.json') as json_file :
     data = json.loads(json_file.read())
     data = data['data']

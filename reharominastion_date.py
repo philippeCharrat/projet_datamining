@@ -35,4 +35,5 @@ def reharmonisation_date(fichier)  :
     fichier.write(chaine_json)
     fichier.close()
     return 0
+
 reharmonisation_date('data.json')            

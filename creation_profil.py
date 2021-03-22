@@ -8,7 +8,10 @@ Created on Tue Mar 16 18:31:25 2021
 
 import cgi,cgitb,json
 
+"Activation de CGI pour récup infos HTML"
 cgitb.enable()
+
+"Déclaration des variables"
 form = cgi.FieldStorage()
 liste_images = []
 liste_images_unlike = []
@@ -17,6 +20,10 @@ orientation_H = 0
 orientation_V = 0
 orientation_prefere = ""
 
+""""
+Récupération des informations de l'utilisateur
+Stockage dans des listes
+"""
 if form.getvalue("nom_utilisateur"):
     username = form.getvalue("nom_utilisateur")
 if form.getvalue("image_0"):
@@ -40,6 +47,10 @@ if form.getvalue("image_4"):
 else:
     liste_images_unlike.append(form.getvalue("invisible_4"))
 
+"""
+Comparaison entre data.json et formulaire pour déterminer les préférences de 
+l'utilisateur.
+"""
 with open('data.json') as json_file :
     data = json.load(json_file)
     data = data["data"]
@@ -57,12 +68,15 @@ if (orientation_V > orientation_H) :
     orientation_prefere = "portrait"
 else :  
     orientation_prefere = "paysage"
-        
+
+"Stockage des informations de l'utilisateur"        
 dico_profil_utilisateur = {"nom_utilisateur":username,"image_like":liste_images,"image_unlike":liste_images_unlike,"theme_test":liste_themes,"orientation_perfere":orientation_prefere}
 fichier = open("Profil/profil_"+str(username)+".json","w")
 str_dico_profil = str(dico_profil_utilisateur).replace("\'","\"")
 fichier.write(str_dico_profil)
 fichier.close()
+
+"Affichage d'autres options après création profil"
 print("Content-type: text/html; charset=utf-8\n")
 html ="""
 <html>
@@ -76,5 +90,4 @@ html ="""
     </body>
 </html>
 """
-
 print(html)    

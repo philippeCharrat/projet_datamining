@@ -15,6 +15,7 @@ Created on Sat Mar 13 16:48:41 2021
 """
 import cgi, random ,json
 
+"Récupération des informations du formulaire"
 form = cgi.FieldStorage()
 print("Content-type: text/html; charset=utf-8\n")
 if form.getvalue("nom_image") : 
@@ -22,6 +23,7 @@ if form.getvalue("nom_image") :
 else : 
     ajout_balise = 0
 
+"Pas d'ajout de balise encore : on propose une image, jusqu'à ce qu'une balise soit ajoutée à une image"
 if (ajout_balise == 0) :
     with open('data.json') as json_file :
         data = json.loads(json_file.read())
@@ -38,7 +40,7 @@ if (ajout_balise == 0) :
             </style>
         <center><h2> Formulaire d'ajout de balise</h2></center>
         <form method="post" action="ajout_balise.py">
-        <h3>La balise supplémentarie : </h3>
+        <h3>La balise supplémentaire : </h3>
         <input type='text' name="balise_supp" required>
             <input type='submit' value='Soumettre'>
         <h3>Image issue du thème : """+ theme +""": </h3>

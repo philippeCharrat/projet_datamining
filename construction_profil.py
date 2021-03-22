@@ -13,5 +13,5 @@ def construction_profil() :
     
             
             
-    
+"Fonction d'initialisation : ce script est appelé après démarrage du frontend" 
 construction_profil()

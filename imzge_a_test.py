@@ -8,11 +8,16 @@ Created on Sun Mar 21 09:56:49 2021
 
 import cgi, random ,json, cgitb
 
+"Utilisation de CGI pour formulaire HTML"
 cgitb.enable()
 form = cgi.FieldStorage()
+
+"""
+Récupération du choix de l'utilisateur et ajout dans les dicos d'images 
+likées/unlikées afin d'affiner la future proposition
+"""
 if form.getvalue("nom") : 
     nom = form.getvalue("nom") 
-    
 if form.getvalue("like_image") : 
     like = form.getvalue("like_image") 
     with open("Profil/profil_philippe.json") as json_file :
@@ -24,7 +29,8 @@ if form.getvalue("like_image") :
     fichier = open("Profil/profil_philippe.json","w")
     fichier.write(str(data).replace("\'","\""))
     fichier.close()
-    
+
+"Affichage du code HTML"   
 print("Content-type: text/html; charset=utf-8\n")
 html ="""
     <html>

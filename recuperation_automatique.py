@@ -18,7 +18,14 @@ for filename in os.listdir("Images") : #Suppression des anciennes images
 #os.remove("data.json")
 
 def convert_rgb_to_names(rgb_tuple):
-    
+    """
+    But : Fonction qui retourne la couleur la couleur html la plus proche en fonction de 
+    l'intensité rgb
+    Input : 
+        - rgb_tuple : tuple de longueur 3 contenant les intensités des pixels rouge, vert et bleu
+    Output:
+        - f' {names[index]}' : string de la couleur html la plus proche du tuple rgb fourni
+    """  
     # a dictionary of all the hex and their respective names in css3
     css3_db = webcolors.CSS3_HEX_TO_NAMES
     names = []
@@ -82,13 +89,16 @@ images = 0
 while(images<10) :
     # Execution d'une requête d'un thème de la liste
     
+    "Choix d'un thème dans la liste d'éléments"
     a = random.randint(0,len(liste_element)-1)
     element = liste_element[a]
     
+    "Préparation requête SQL avec le code wikidata du thème et exécution"
     query_string = "SELECT ?item ?itemLabel ?pic WHERE { ?item wdt:P31 wd:"+str(element[1])+". ?item wdt:P18 ?pic} limit 5"
     res = return_sparql_query_results(query_string)
-    nb_elements = str(res).count("item")
     
+    "Etiquetage à l'aide des ExifTags et des fonctions de ce script"
+    nb_elements = str(res).count("item")
     for i in range (nb_elements-2) :
         chaine = "Images/"+str(element[0])+str(i)+".jpg"
         try :
@@ -98,6 +108,10 @@ while(images<10) :
             exif_data = img._getexif()
             dico_image = {"nom":chaine}
             for k,v in img._getexif().items():
+                """
+                Etiquetages pris en compte : description, largeur, hauteurs (en pixels), logiciel et date de prise de vue
+                Si une image ne contient pas un de ces tags, elle ne sera pas prise en compte
+                """
                 if (k in [270,40962,40963,306,305]):
                     v = str(v).replace("\x00",".")
                     v = str(v).replace("\""," ")
@@ -105,28 +119,34 @@ while(images<10) :
                     dico_image[str(k)] = v
             dico_image["theme"] = element[0]
             try : 
-                if int(dico_image["40962"]) >= int(dico_image["40963"]):
+                "Etiquetage paysage ou portrait, en fonction de la largeur et de la hauteur"
+                if int(dico_image["40962"]) >= int(dico_image["40963"]): #Largeur > Hauteur
                     dico_image["orientation"] = "paysage"
                 else:
                     dico_image["orientation"] = "portrait"
+                "Etiquetage de la couleur"
                 dico_image["couleur"] = etiquetage_couleur(chaine) #ajout de la couleur
             except:
                 descriptionisset = 0
         except:
             print("erreur : ",chaine)
         if (descriptionisset != 1 ) : 
+            #Aucun des tags attendus, suppression de l'image
             os.remove(chaine)
         else : 
             print("image sauvée")
-            dico_image["type"]= etiquetage_taille(int(dico_image["40962"]),int(dico_image["40963"]))#ajout du type
+            "Etiquetage type à l'aide de la fonction préprogrammée"
+            dico_image["type"]= etiquetage_taille(int(dico_image["40962"]),int(dico_image["40963"]))
             images += 1
             chaine_json += str(dico_image) +","
     
     liste_element.remove(element)
     print(element)
+
+"Encodage des tags dans un fichier JSON"
 chaine_json = chaine_json[:-1]
 chaine_json += "]}"
 chaine_json = chaine_json.replace("\'","\"")
-fichier = open("data.json","w")
+fichier = open("data.json","w") #Réécriture du fichier : les données précédentes sont effacées
 fichier.write(chaine_json)
 fichier.close()
