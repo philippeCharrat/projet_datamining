@@ -5,7 +5,7 @@ Created on Sat Mar 13 16:48:41 2021
 
 @author: philippe
 """
-import cgi, random ,json,random
+import cgi, random ,json
 
 "Affichage du code HTML d'acceuil"
 print("Content-type: text/html; charset=utf-8\n")

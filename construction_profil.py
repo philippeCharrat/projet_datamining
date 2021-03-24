@@ -10,8 +10,6 @@ import webbrowser
 def construction_profil() :
     print("Bonjour, nous allons créer votre profil d'ici quelques instants ...")
     webbrowser.open("localhost/index.py")
-    
-            
-            
+
 "Fonction d'initialisation : ce script est appelé après démarrage du frontend" 
 construction_profil()
