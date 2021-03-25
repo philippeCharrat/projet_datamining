@@ -112,6 +112,4 @@ def verification_profil(profil) :
     else : 
         print("Miskine tu a pas de profil")
 
-profil = input("Saisir votre profil : ")
-verification_profil(profil)
         
