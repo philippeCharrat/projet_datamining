@@ -13,24 +13,8 @@ import cgi, json, cgitb
 cgitb.enable()
 form = cgi.FieldStorage()
 
-"""
-Récupération du choix de l'utilisateur et ajout dans les dicos d'images 
-likées/unlikées afin d'affiner la future proposition
-"""
 if form.getvalue("nom") : 
     nom = form.getvalue("nom") 
-if form.getvalue("like_image") : 
-    like = form.getvalue("like_image") 
-    with open(form.getvalue("profil")) as json_file :
-        data = json.loads(json_file.read())
-        if (like == 'oui') :
-            data['image_like'].append(nom)
-        else :
-            data['image_unlike'].append(nom)
-    fichier = open(form.getvalue("profil"),"w")
-    fichier.write(str(data).replace("\'","\""))
-    fichier.close()
-
 """Affichage du code HTML"""  
 print("Content-type: text/html; charset=utf-8\n")
 html ="""
@@ -53,4 +37,33 @@ html = html + dynamique + """
         </body>
     </html>
     """
+"""
+Récupération du choix de l'utilisateur et ajout dans les dicos d'images 
+likées/unlikées afin d'affiner la future proposition
+"""
+
+if form.getvalue("like_image") : 
+    like = form.getvalue("like_image") 
+    with open(form.getvalue("profil")) as json_file :
+        data = json.loads(json_file.read())
+        if (like == 'oui') :
+            data['image_like'].append(nom)
+        else :
+            data['image_unlike'].append(nom)
+    fichier = open(form.getvalue("profil"),"w")
+    fichier.write(str(data).replace("\'","\""))
+    fichier.close()
+
+    """Affichage du code HTML"""  
+    html ="""
+        <html>
+            <body>
+                <style>
+                    img { width:300px; } 
+                </style>
+            <center> <h1> Vorte choix a été prit ne compte. Vosu pouvez fermer la apge </h1>
+            </body>
+        </html>
+        """
+
 print(html)

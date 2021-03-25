@@ -83,12 +83,7 @@ print("Content-type: text/html; charset=utf-8\n")
 html ="""
 <html>
     <body>
-       <h1> Merci """+str(username)+""", Nous avons créé votre profil. </h1>
-       Deux choix possibles : 
-           <ul>
-               <li> <a href=''>Etiquetage des images </a></li>
-                 <li> <a href=''>Voir des images </a></li>
-           </ul>
+       <h1> Merci """+str(username)+""", Nous avons créé votre profil. Vous pouvze fermer cette page</h1>
     </body>
 </html>
 """

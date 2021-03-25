@@ -77,14 +77,15 @@ def prediction_dune_image_pour(profil) :
     le8 = LabelEncoder()
     resultframe['favorite'] = le8.fit_transform(resultframe['favorite'])
     
-    #Use of decision tree classifiers
-    dtc = tree.DecisionTreeClassifier()
-    dtc = dtc.fit(dataframe, resultframe)
     
     
     "Prédiction d'image à l'aide des labels et de l'arbre de décisions"
     i=0
     while(True) : 
+        
+        #Use of decision tree classifiers
+        dtc = tree.DecisionTreeClassifier()
+        dtc = dtc.fit(dataframe, resultframe)
         image_testee = reference_label[random.randint(0,len(reference_label)-1)]
         i +=1
         if i > 100 : 

@@ -15,9 +15,10 @@ if (os.fork()) :
     commande = 'python3 serveur.py'
     p = os.system('echo %s| sudo -S %s' % (password,commande))
 else : 
-    time.sleep(10)
-    while (True) : 
-        print("Que souhaitez vous faire : \n 1 - Créatoin d'un profil \n 2 - Ajout d'une balise \n 3 - Recommendation d'une image")
+    
+    while (True) :
+        time.sleep(4) 
+        print("Que souhaitez vous faire : \n 1 - Créatoin d'un profil \n 2 - Ajout d'une balise \n 3 - Recommendation d'une image \n 4 -  Effacer le terminal ")
         choix = input("Saisir le nombre : ")
         if (choix == "1") :
             webbrowser.open("localhost/index.py")
@@ -26,5 +27,6 @@ else :
         elif (choix == "3") : 
             profil = input("Saisir votre profil : ")
             script_prediction_profil.verification_profil(profil)
-            
+        elif (choix == "4") : 
+            os.system("clear") 
             
