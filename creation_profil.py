@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Mar 16 18:31:25 2021
-
-@author: philippe
+Created on Wed Mar 17 13:13:36 2021
+@authors: Philippe CHARRAT & Clement CORNU
+@version: 1.1
+Usage : Script pour la prédiction d'image recommandées.
 """
+
 
 import cgi,cgitb,json
 
-"Activation de CGI pour récup infos HTML"
+"""Activation de CGI pour les erreurs"""
 cgitb.enable()
 
 "Déclaration des variables"

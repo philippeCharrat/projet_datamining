@@ -36,4 +36,36 @@ def reharmonisation_date(fichier)  :
     fichier.close()
     return 0
 
-reharmonisation_date('data.json')            
+def reharmonisation_exif(fichier)  :
+    """
+        But : Réharmonisation des exifs. La fonction va tester leurs présences
+        et sinon les ajouter.
+        Remarque : A n'exécuter qu'une fois.  
+        Input : 
+            - fichier : string contenant le nom du fichier
+        Output : 
+            - int : 0
+    """
+    with open(fichier) as json_file :
+        data = json.loads(json_file.read())
+        datas = data['data']
+        chaine_json = "{ \"data\" :["
+        for p in datas:
+            try : 
+                atest = p["305"] 
+            except : 
+                p["305"] = ""
+            try : 
+                atest = p["270"] 
+            except : 
+                p["270"] = ""  
+            p["balise_supp"] = ""
+            chaine_json = chaine_json + str(p)+","
+        chaine_json = chaine_json[:-1]
+        chaine_json += "]}"    
+        chaine_json = chaine_json.replace("\'","\"")
+    fichier = open("data.json","w")
+    fichier.write(chaine_json)
+    fichier.close()
+    return 0
+reharmonisation_date('data.json')
