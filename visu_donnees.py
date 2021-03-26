@@ -65,12 +65,28 @@ def clusters_image(image):
     plot.savefig("Donnees_visualisees/clusters_"+juste_le_nom)
     plot.clf()
 
+def donnees_profil_utilisateur(data):
+    print("Fonction pas encore mise en place")
+
 start = time.time()   
 for i in os.listdir("Images"):
     composition_image("Images/"+i)
     clusters_image("Images/"+i)
     print("Infos "+i+" synthétisées")
+    
+print("Fin de synthétisation des images")
+print("Début mise en place des graphiques")
+data = json.load(open('data.json'))
+for i in data["data"].keys():
+    for j in data["data"].keys():
+        if i != j:
+            x_en_fonction_de_y(i,j)
 finish = time.time()
 temps_exec = finish-start
 print("Fin de synthétisation des données")
 print("Le temps de calcul par image était de "+str(temps_exec/10)+" secondes")
+
+
+
+
+            
