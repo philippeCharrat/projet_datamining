@@ -86,7 +86,7 @@ chaine_json = "{ \"data\" :["
 liste_element = [["montagne","Q8502"],["chat","Q146"],["manga","Q8724"],["homme","Q5"],["chien","Q144"],["plante","Q756"],["sport","Q31629"],["film","Q11424"],["art","Q838948"],["peinture","Q11629"]]
 images = 0
 
-while(images<10) :
+while(images<100) :
     # Execution d'une requête d'un thème de la liste
     
     "Choix d'un thème dans la liste d'éléments"
@@ -94,7 +94,7 @@ while(images<10) :
     element = liste_element[a]
     
     "Préparation requête SQL avec le code wikidata du thème et exécution"
-    query_string = "SELECT ?item ?itemLabel ?pic WHERE { ?item wdt:P31 wd:"+str(element[1])+". ?item wdt:P18 ?pic} limit 5"
+    query_string = "SELECT ?item ?itemLabel ?pic WHERE { ?item wdt:P31 wd:"+str(element[1])+". ?item wdt:P18 ?pic} limit 30"
     res = return_sparql_query_results(query_string)
     
     "Etiquetage à l'aide des ExifTags et des fonctions de ce script"

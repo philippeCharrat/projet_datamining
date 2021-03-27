@@ -50,13 +50,13 @@ def composition_image(image):
 def clusters_image(image):
     imgfile = Image.open(image)
     numarray = numpy.array(imgfile.getdata(), numpy.uint8)
-    clusters = KMeans(n_clusters = 4)
+    clusters = KMeans(n_clusters = 2)
     clusters.fit(numarray)
-    npbins = numpy.arange(0, 5)
+    npbins = numpy.arange(0, 3)
     histogram = numpy.histogram(clusters.labels_, bins=npbins)
     labels = numpy.unique(clusters.labels_)
     barlist = plot.bar(labels, histogram[0])
-    for i in range(4):
+    for i in range(2):
         barlist[i].set_color('#%02x%02x%02x' % (
         math.ceil(clusters.cluster_centers_[i][0]), 
             math.ceil(clusters.cluster_centers_[i][1]),
