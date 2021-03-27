@@ -7,59 +7,14 @@ Created on Mon Mar  1 10:09:13 2021
 """
 # Import Bibliothèque ---
 from PIL import Image
-import urllib.request, random, os, numpy, math, webcolors
-from sklearn.cluster import KMeans
+import urllib.request, random, os, time
 from qwikidata.sparql import return_sparql_query_results 
-from scipy.spatial import KDTree
+
 
 # Suppression des anciennes images 
 for filename in os.listdir("Images") : #Suppression des anciennes images
     os.remove("Images/"+filename)
 #os.remove("data.json")
-
-def convert_rgb_to_names(rgb_tuple):
-    """
-    But : Fonction qui retourne la couleur la couleur html la plus proche en fonction de 
-    l'intensité rgb
-    Input : 
-        - rgb_tuple : tuple de longueur 3 contenant les intensités des pixels rouge, vert et bleu
-    Output:
-        - f' {names[index]}' : string de la couleur html la plus proche du tuple rgb fourni
-    """  
-    # a dictionary of all the hex and their respective names in css3
-    css3_db = webcolors.CSS3_HEX_TO_NAMES
-    names = []
-    rgb_values = []
-    for color_hex, color_name in css3_db.items():
-        names.append(color_name)
-        rgb_values.append(webcolors.hex_to_rgb(color_hex))
-    
-    kdt_db = KDTree(rgb_values)
-    distance, index = kdt_db.query(rgb_tuple)
-    return f' {names[index]}'
-
-
-def etiquetage_couleur(image):
-    """
-    But : Fonction qui retourne la couleur en fonction des clusters
-    Input : 
-        - image : string contenant le chemin relatif de l'image (ex : "Images/nom_image.jpg")
-    Output:
-        - couleur_predominante : string contenant la couleur (ex : "orange")
-    """    
-    imgfile = Image.open(image)
-    numarray = numpy.array(imgfile.getdata(), numpy.uint8)
-    clusters = KMeans(n_clusters = 4)
-    clusters.fit(numarray)
-    npbins = numpy.arange(0, 5)
-    histogram = numpy.histogram(clusters.labels_, bins=npbins)
-    classement_couleur = numpy.argsort(histogram[0])#Couleur prédominante en derniere position
-    couleur_predominante = classement_couleur[-1] #Là on la récup
-    couleur_predominante = convert_rgb_to_names(webcolors.hex_to_rgb('#%02x%02x%02x' % (
-        math.ceil(clusters.cluster_centers_[couleur_predominante][0]), 
-            math.ceil(clusters.cluster_centers_[couleur_predominante][1]),
-        math.ceil(clusters.cluster_centers_[couleur_predominante][2])))) #On récup la couleur à l'aide de webcolors
-    return couleur_predominante
 
 def etiquetage_taille(dico_image_hauteur,dico_image_largeur):
     """
@@ -86,6 +41,7 @@ chaine_json = "{ \"data\" :["
 liste_element = [["montagne","Q8502"],["chat","Q146"],["manga","Q8724"],["homme","Q5"],["chien","Q144"],["plante","Q756"],["sport","Q31629"],["film","Q11424"],["art","Q838948"],["peinture","Q11629"]]
 images = 0
 
+start = time.time()
 while(images<100) :
     # Execution d'une requête d'un thème de la liste
     
@@ -115,6 +71,7 @@ while(images<100) :
                 if (k in [270,40962,40963,306,305]):
                     v = str(v).replace("\x00",".")
                     v = str(v).replace("\""," ")
+                    v = str(v).replace("\'"," ")
                     descriptionisset = 1
                     dico_image[str(k)] = v
             dico_image["theme"] = element[0]
@@ -125,7 +82,7 @@ while(images<100) :
                 else:
                     dico_image["orientation"] = "portrait"
                 "Etiquetage de la couleur"
-                dico_image["couleur"] = etiquetage_couleur(chaine) #ajout de la couleur
+                #dico_image["couleur"] = etiquetage_couleur(chaine) #ajout de la couleur
             except:
                 descriptionisset = 0
         except:
@@ -150,3 +107,7 @@ chaine_json = chaine_json.replace("\'","\"")
 fichier = open("data.json","w") #Réécriture du fichier : les données précédentes sont effacées
 fichier.write(chaine_json)
 fichier.close()
+
+finish = time.time()
+duree = finish - start
+print("L'extraction des images a pris "+duree/60+" secondes")
