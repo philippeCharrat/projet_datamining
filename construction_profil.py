@@ -11,9 +11,12 @@ import script_prediction_profil
 """Fonction d'initialisation : ce script est appelé après démarrage du frontend"""
 
 if (os.fork()) : 
-    password = "Maxime1971"
-    commande = 'python3 serveur.py'
-    p = os.system('echo %s| sudo -S %s' % (password,commande))
+    try : 
+        password = "Toto123"
+        commande = 'python3 serveur.py'
+        p = os.system('echo %s| sudo -S %s' % (password,commande))
+    except :
+        exit()
 else : 
     
     while (True) :

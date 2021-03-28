@@ -85,6 +85,37 @@ def etiquetage_couleur(image):
     return couleur_predominante
     
 
+def reharmonisation_couleur(fichier)  :
+    """
+        But : Réharmonisation des exifs. La fonction va tester leurs présences
+        et sinon les ajouter.
+        Remarque : A n'exécuter qu'une fois.  
+        Input : 
+            - fichier : string contenant le nom du fichier
+        Output : 
+            - int : 0
+    """
+    with open(fichier) as json_file :
+        data = json.loads(json_file.read())
+        datas = data['data']
+        chaine_json = "{ \"data\" :["
+        i=0
+        for p in datas:
+            i=i+1
+            try:
+                p["couleur"] = etiquetage_couleur(p["nom"])
+            except:
+                p["couleur"] = "undefined"
+            chaine_json = chaine_json + str(p)+","
+            print(i)
+        chaine_json = chaine_json[:-1]
+        chaine_json += "]}"    
+        chaine_json = chaine_json.replace("\'","\"")
+    fichier = open("data.json","w")
+    fichier.write(chaine_json)
+    fichier.close()
+    return 0
+
 def reharmonisation_exif(fichier)  :
     """
         But : Réharmonisation des exifs. La fonction va tester leurs présences
@@ -117,11 +148,3 @@ def reharmonisation_exif(fichier)  :
     fichier.write(chaine_json)
     fichier.close()
     return 0
-reharmonisation_date('data.json')
-
-with open('data.json') as json_file :
-        data = json.loads(json_file.read())
-        datas = data['data']
-        for i in os.listdir("Images"):
-            couleur_predominante = etiquetage_couleur("Images/"+i)
-            datas["couleur_predominante"] = couleur_predominante

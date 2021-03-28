@@ -17,7 +17,7 @@ cgitb.enable()
 form = cgi.FieldStorage()
 liste_images = []
 liste_images_unlike = []
-liste_themes = []
+dico_themes = {}
 orientation_H = 0
 orientation_V = 0
 orientation_prefere = ""
@@ -58,21 +58,22 @@ with open('data.json') as json_file :
     data = data["data"]
     for p in data : 
         if (p["nom"] in liste_images) : 
-            if (p["theme"] not in liste_themes) : 
-                liste_themes.append(p["theme"])
+            if (p["theme"] not in dico_themes.keys()) : 
+                dico_themes[p["theme"]] = 1
+            else :
+                dico_themes[p["theme"]] = dico_themes[p["theme"]]+ 1
             if(p["orientation"] == "portrait") : 
                 orientation_V += 1
             else : 
                 orientation_H += 1
-        if (p["nom"] in liste_images_unlike) : 
-             liste_themes.append(p["theme"])   
+                
 if (orientation_V > orientation_H) : 
     orientation_prefere = "portrait"
 else :  
     orientation_prefere = "paysage"
 
 "Stockage des informations de l'utilisateur"        
-dico_profil_utilisateur = {"nom_utilisateur":username,"image_like":liste_images,"image_unlike":liste_images_unlike,"theme_test":liste_themes,"orientation_perfere":orientation_prefere}
+dico_profil_utilisateur = {"nom_utilisateur":username,"image_like":liste_images,"image_unlike":liste_images_unlike,"theme":dico_themes,"orientation_perfere":orientation_prefere,"orientation_V":orientation_V,"orientation_H":orientation_V}
 fichier = open("Profil/profil_"+str(username)+".json","w")
 str_dico_profil = str(dico_profil_utilisateur).replace("\'","\"")
 fichier.write(str_dico_profil)

@@ -111,6 +111,6 @@ def verification_profil(profil) :
     if (profil_is_set == 1) :
         prediction_dune_image_pour(fichier_json)
     else : 
-        print("Miskine tu a pas de profil")
+        print("Vous n'avez pas encore de compte")
 
         
