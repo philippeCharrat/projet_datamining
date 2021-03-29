@@ -84,7 +84,7 @@ print("Content-type: text/html; charset=utf-8\n")
 html ="""
 <html>
     <body>
-       <h1> Merci """+str(username)+""", Nous avons créé votre profil. Vous pouvze fermer cette page</h1>
+       <h1> Merci """+str(username)+""", Nous avons créé votre profil. Vous pouvez fermer cette page</h1>
     </body>
 </html>
 """

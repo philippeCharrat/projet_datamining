@@ -98,7 +98,7 @@ def prediction_dune_image_pour(profil) :
             print(le8.inverse_transform(prediction))
             print(dtc.feature_importances_)
             if (le8.inverse_transform(prediction) == 'Favorite') :
-                webbrowser.open("localhost/imzge_a_test.py?nom="+image_testee['nom']+"&profil="+profil)
+                webbrowser.open("localhost/image_a_tester.py?nom="+image_testee['nom']+"&profil="+profil)
                 break
 
 def verification_profil(profil) : 

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 24 15:37:59 2021
-
-@author: eremix
+Created on Wed Mar 17 13:13:36 2021
+@authors: Philippe CHARRAT & Clement CORNU
+@version: 1.1
+Usage : Script permettant la visualisation des données des images
 """
 
 import json,cgi,os
@@ -15,7 +16,7 @@ image = ""
 checbox = ""
 hidden = ""
 
-"""On entre ici i l'utilisateur a fait son choix"""
+"""On entre ici si l'utilisateur a fait son choix"""
 if form.getvalue("visu_type"):
     html ="""
     <html>

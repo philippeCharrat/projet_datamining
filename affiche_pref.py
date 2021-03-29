@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Mar 28 13:00:56 2021
-
-@author: philippe
+Created on Wed Mar 17 13:13:36 2021
+@authors: Philippe CHARRAT & Clement CORNU
+@version: 1.1
+Usage : Script permettant de calculer/afficher les préférences de l'utilisateur
 """
-
 import cgi,cgitb,json
 
 """Activation de CGI pour les erreurs"""

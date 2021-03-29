@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sat Mar 13 16:48:41 2021
-
-@author: philippe
+Created on Wed Mar 17 13:13:36 2021
+@authors: Philippe CHARRAT & Clement CORNU
+@version: 1.1
+Usage : Page d'affichage pour créer un profil
 """
 import cgi, random ,json
 

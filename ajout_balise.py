@@ -18,7 +18,7 @@ if form.getvalue("nom_image") :
 else : 
     ajout_balise = 0
 
-"""Si une balise a été saisie alors elle est ajouté dans data balise_supp"""
+"""Si une balise a été saisie alors elle est ajoutée dans data["balise_supp"]"""
 if (ajout_balise == 1) :
     with open('data.json') as json_file :
         data = json.loads(json_file.read())

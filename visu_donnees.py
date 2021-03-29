@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 24 13:17:00 2021
-
-@author: clementcornu
+Created on Wed Mar 17 13:13:36 2021
+@authors: Philippe CHARRAT & Clement CORNU
+@version: 1.1
+Usage : Script permettant d'extraire les images représentant les données visualisées.
+Remarque : à exécuter à la suite du pré-traitement.
 """
 
 import json,numpy,math,os,time
@@ -31,20 +33,21 @@ def x_en_fonction_de_y(x,y):
 
 def composition_image(image):
     imgfile = Image.open(image)
-    histogram = imgfile.histogram()
     
-    # we have three bands (for this image)
-    red = histogram[0:255]
-    green = histogram[256:511]
-    blue = histogram[512:767]
-    x=range(255)
-    y = []
-    for i in x:
-        y.append((red[i],green[i],blue[i]))
-    plot.plot(x,y)
-    juste_le_nom = get_name(image)
-    plot.savefig("Donnees_visualisees/Composition_"+juste_le_nom)
-    plot.clf()
+    if imgfile.size[0] > 255 and imgfile.size[1] > 255:
+        histogram = imgfile.histogram()
+        # we have three bands (for this image)
+        red = histogram[0:255]
+        green = histogram[256:511]
+        blue = histogram[512:767]
+        x=range(255)
+        y = []
+        for i in x:
+            y.append((red[i],green[i],blue[i]))
+        plot.plot(x,y)
+        juste_le_nom = get_name(image)
+        plot.savefig("Donnees_visualisees/Composition_"+juste_le_nom)
+        plot.clf()
     imgfile.close()
     
 def clusters_image(image):
@@ -68,23 +71,20 @@ def clusters_image(image):
 def donnees_profil_utilisateur(data):
     print("Fonction pas encore mise en place")
 
-start = time.time()   
-for i in os.listdir("Images"):
-    composition_image("Images/"+i)
-    clusters_image("Images/"+i)
-    print("Infos "+i+" synthétisées")
-    
-print("Fin de synthétisation des images")
-print("Début mise en place des graphiques")
-data = json.load(open('data.json'))
-for i in data["data"].keys():
-    for j in data["data"].keys():
-        if i != j:
-            x_en_fonction_de_y(i,j)
-finish = time.time()
-temps_exec = finish-start
-print("Fin de synthétisation des données")
-print("Le temps de calcul par image était de "+str(temps_exec/10)+" secondes")
+def images_visu_donnees():   
+    for i in os.listdir("Images"):
+        composition_image("Images/"+i)
+        clusters_image("Images/"+i)
+        print("Infos "+i+" synthétisées")
+        
+    print("Fin de synthétisation des images")
+    print("Début mise en place des graphiques")
+    data = json.load(open('data.json'))
+    for i in data["data"].keys():
+        for j in data["data"].keys():
+            if i != j:
+                x_en_fonction_de_y(i,j)
+    print("Fin de synthétisation des données")
 
 
 
