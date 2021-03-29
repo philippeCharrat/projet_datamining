@@ -6,7 +6,8 @@ Created on Wed Mar 17 13:43:53 2021
 @author: philippe
 """
 from PIL import Image
-import json, numpy, math, webcolors
+import PIL
+import json, numpy, math, webcolors,time
 from scipy.spatial import KDTree
 from sklearn.cluster import KMeans
 import os
@@ -49,7 +50,7 @@ def convert_rgb_to_names(rgb_tuple):
     Output:
         - f' {names[index]}' : string de la couleur html la plus proche du tuple rgb fourni
     """  
-    # a dictionary of all the hex and their respective names in css3
+    # a dictionary of all the hex and their respective names in css
     css3_db = webcolors.CSS3_HEX_TO_NAMES
     names = []
     rgb_values = []
@@ -69,11 +70,15 @@ def etiquetage_couleur(image):
         - image : string contenant le chemin relatif de l'image (ex : "Images/nom_image.jpg")
     Output:
         - couleur_predominante : string contenant la couleur (ex : "orange")
-    """    
+    """
+        
     imgfile = Image.open(image)
     numarray = numpy.array(imgfile.getdata(), numpy.uint8)
     clusters = KMeans(n_clusters = 4)
+    start = time.time()
     clusters.fit(numarray)
+    finish = time.time()
+    print("Fin fitting en "+str(finish-start)+" secondes")
     npbins = numpy.arange(0, 5)
     histogram = numpy.histogram(clusters.labels_, bins=npbins)
     classement_couleur = numpy.argsort(histogram[0])#Couleur prédominante en derniere position
@@ -116,6 +121,17 @@ def reharmonisation_couleur(fichier)  :
     fichier.close()
     return 0
 
+def compression_image(fichier):
+    with open(fichier) as json_file :
+        data = json.loads(json_file.read())
+        datas = data['data']
+        i=0
+        for p in datas:
+            i = i+1
+            img = Image.open(p["nom"])
+            img.save(p["nom"], optimize=True, quality=20)
+            print(i)
+
 def reharmonisation_exif(fichier)  :
     """
         But : Réharmonisation des exifs. La fonction va tester leurs présences
@@ -148,3 +164,12 @@ def reharmonisation_exif(fichier)  :
     fichier.write(chaine_json)
     fichier.close()
     return 0
+
+#compression_image("data.json")
+#print("Fin compression")
+reharmonisation_couleur("data.json")
+print("Fin reharmonisation couleur")
+reharmonisation_exif("data.json")
+print("Fin reharmo exif")
+reharmonisation_date("data.json")
+print("Fin reharmo date")
