@@ -12,11 +12,6 @@ import urllib.request, random, os, time
 from qwikidata.sparql import return_sparql_query_results 
 
 
-# Suppression des anciennes images 
-for filename in os.listdir("Images") : #Suppression des anciennes images
-    os.remove("Images/"+filename)
-#os.remove("data.json")
-
 def etiquetage_taille(dico_image_hauteur,dico_image_largeur):
     """
     But : Fonction qui retourne le type d'une image
@@ -38,7 +33,11 @@ def etiquetage_taille(dico_image_hauteur,dico_image_largeur):
     return type_image
 
 def extraction_brute():
-# Initialisation de la liste contenant les thèmes ---
+    # Initialisation de la liste contenant les thèmes ---
+    # Suppression des anciennes images 
+    for filename in os.listdir("Images") : #Suppression des anciennes images
+        os.remove("Images/"+filename)
+    #os.remove("data.json")
     chaine_json = "{ \"data\" :["
     liste_element = [["montagne","Q8502"],["chat","Q146"],["manga","Q8724"],["homme","Q5"],["chien","Q144"],["plante","Q756"],["sport","Q31629"],["film","Q11424"],["art","Q838948"],["peinture","Q11629"]]
     images = 0

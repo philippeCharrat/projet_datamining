@@ -73,7 +73,7 @@ else :
     orientation_prefere = "paysage"
 
 "Stockage des informations de l'utilisateur"        
-dico_profil_utilisateur = {"nom_utilisateur":username,"image_like":liste_images,"image_unlike":liste_images_unlike,"theme":dico_themes,"orientation_perfere":orientation_prefere,"orientation_V":orientation_V,"orientation_H":orientation_V}
+dico_profil_utilisateur = {"nom_utilisateur":username,"image_like":liste_images,"image_unlike":liste_images_unlike,"theme":dico_themes,"orientation_perfere":orientation_prefere,"orientation_V":orientation_V,"orientation_H":orientation_H}
 fichier = open("Profil/profil_"+str(username)+".json","w")
 str_dico_profil = str(dico_profil_utilisateur).replace("\'","\"")
 fichier.write(str_dico_profil)
