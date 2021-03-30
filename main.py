@@ -16,7 +16,7 @@ import visu_donnees
 
 if (os.fork()) : 
     try : 
-        password = "Toto123"
+        password = "Maxime1971"
         commande = 'python3 serveur.py'
         p = os.system('echo %s| sudo -S %s' % (password,commande))
     except :
@@ -39,8 +39,8 @@ else :
         elif (choix == "5"):
             webbrowser.open("localhost/choix_visu_donnees.py")
         elif (choix == "6"):
-            extraction.extraction_brute()
-            pre_traitement_donnees.pre_traitement()
+            #extraction.extraction_brute()
+            #pre_traitement_donnees.pre_traitement()
             visu_donnees.images_visu_donnees()
         elif (choix == "7") :
             profil = input("Saisir votre profil : ")

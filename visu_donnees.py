@@ -33,10 +33,8 @@ def x_en_fonction_de_y(x,y):
 
 def composition_image(image):
     imgfile = Image.open(image)
-    
-    if imgfile.size[0] > 255 and imgfile.size[1] > 255:
-        histogram = imgfile.histogram()
-        # we have three bands (for this image)
+    histogram = imgfile.histogram()
+    if rgb_ou_niveau_de_gris(image):
         red = histogram[0:255]
         green = histogram[256:511]
         blue = histogram[512:767]
@@ -67,6 +65,15 @@ def clusters_image(image):
     juste_le_nom = get_name(image)
     plot.savefig("Donnees_visualisees/clusters_"+juste_le_nom)
     plot.clf()
+
+def rgb_ou_niveau_de_gris(image):
+    img = Image.open(image).convert('RGB')
+    w,h = img.size
+    for i in range(w):
+        for j in range(h):
+            r,g,b = img.getpixel((i,j))
+            if r != g != b: return True
+    return False
 
 def donnees_profil_utilisateur(data):
     print("Fonction pas encore mise en place")
