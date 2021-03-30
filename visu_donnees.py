@@ -71,7 +71,9 @@ def clusters_image(image):
 def donnees_profil_utilisateur(data):
     print("Fonction pas encore mise en place")
 
-def images_visu_donnees():   
+def images_visu_donnees():
+    for filename in os.listdir("Donnees_visualisees") : #Suppression des anciennes images
+        os.remove("Donnees_visualisees/"+filename)   
     for i in os.listdir("Images"):
         composition_image("Images/"+i)
         clusters_image("Images/"+i)
