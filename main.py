@@ -25,7 +25,7 @@ else :
     
     while (True) :
         time.sleep(2) 
-        print("Que souhaitez-vous faire : \n 1 - Création d'un profil \n 2 - Ajout d'une balise \n 3 - Recommendation d'une image \n 4 -  Effacer le terminal \n 5 - Visualiser des donnees \n 6 - Lancer l'extraction et le pré-traitement des données")
+        print("Que souhaitez-vous faire : \n 1 - Création d'un profil \n 2 - Ajout d'une balise \n 3 - Recommendation d'une image \n 4 -  Effacer le terminal \n 5 - Visualiser des donnees \n 6 - Lancer l'extraction et le pré-traitement des données\n 7 - Connaitre vos préférences profil")
         choix = input("Saisir le nombre : ")
         if (choix == "1") :
             webbrowser.open("localhost/index.py")
@@ -42,4 +42,7 @@ else :
             extraction.extraction_brute()
             pre_traitement_donnees.pre_traitement()
             visu_donnees.images_visu_donnees()
+        elif (choix == "7") :
+            profil = input("Saisir votre profil : ")
+            webbrowser.open("localhost/affiche_pref.py?nom_utilisateur="+profil)
             

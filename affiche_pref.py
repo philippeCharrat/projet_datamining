@@ -7,21 +7,28 @@ Created on Wed Mar 17 13:13:36 2021
 Usage : Script permettant de calculer/afficher les préférences de l'utilisateur
 """
 import cgi,cgitb,json
-profil = "philippe"
-fichier_json = "Profil/profil_"+str(profil)+".json" 
+# Récupération du profil à test 
 try : 
+    form = cgi.FieldStorage()
+    profil = form.getvalue("nom_utilisateur")
+    fichier_json = "Profil/profil_"+str(profil)+".json" 
     with open(fichier_json,'r') as f :
         profil_is_set = 1
+ #Sinon profil inexistant ou non envoyé
 except :
     profil_is_set = 0
-    
+
+# Traitement du profil    
 if (profil_is_set == 1):
     theme_pref = ""
     iteration_theme_pref =0
     i  =0
-    
     couleur_pref = ""
     iteration_couleur_pref =0
+    type_pref = ""
+    iteration_type_pref =0
+    
+    # Récupération de son dictionnaire 
     with open(fichier_json) as json_file :
         dico = json.loads(json_file.read())
         orientation_V = 0
@@ -30,14 +37,17 @@ if (profil_is_set == 1):
         list_img_unlike = dico['image_unlike']
         dico_themes = {}
         dico_couleur = {}
+        dico_type = {}
         
-    "Chargement du fichier data.json en remplaçant le nom"
+    #Chargement du fichier data.json en remplaçant le nom
     with open('data.json') as json_file :
         data = json.loads(json_file.read())
         data = data["data"]
         for p in data :
+            # Si l'image est dans la liste like 
             if (p["nom"] in list_img_like) :
                 i += 1
+                # Ajout du mode 
                 if(p["orientation"] == "portrait") : 
                     orientation_V += 1
                 else : 
@@ -52,7 +62,12 @@ if (profil_is_set == 1):
                     dico_couleur[p["couleur"]] = 1
                 else :
                     dico_couleur[p["couleur"]] = dico_themes[p["couleur"]]+ 1                    
-                    
+                
+                if (p["type"] not in dico_type.keys()) : 
+                    dico_type[p["type"]] = 1
+                else :
+                    dico_type[p["type"]] = dico_type[p["type"]]+ 1                    
+                      
     
     if (orientation_V > orientation_H) : 
         orientation_prefere = "portrait"
@@ -66,7 +81,12 @@ if (profil_is_set == 1):
     for p in dico_couleur.keys() : 
         if (dico_couleur[p] > iteration_couleur_pref) :
             couleur_pref = p
-            iteration_couleur_pref = dico_couleur[p]    
+            iteration_couleur_pref = dico_couleur[p] 
+            
+    for p in dico_type.keys() : 
+        if (dico_type[p] > iteration_type_pref) :
+            type_pref = p
+            iteration_type_pref = dico_type[p]    
         
     "Stockage des informations de l'utilisateur"        
     dico_profil_utilisateur = {"nom_utilisateur":profil,"image_like":list_img_like,"image_unlike":list_img_unlike,"theme":dico_themes,"orientation_perfere":orientation_prefere,"orientation_V":orientation_V,"orientation_H":orientation_H}
@@ -80,21 +100,35 @@ if (profil_is_set == 1):
     html ="""
     <html>
         <style>
-         td { boredr: 1px solid black; width:200px;}
+         td { border: 1px solid black; width:200px;}
         </style>
         <body>
            <h1> Bonjour """+str(profil)+"""</h1>
            <p> Nous pouvons vous dire que vous avez liké """+str(i)+""" 
            photos sur les """ +str(len(list_img_unlike)+i) +""" 
            proposées. Soit un poucrentage de : """+str(int(100*(i/(len(list_img_unlike)+i)))) +"""% </p></br>
-           <table><tr><td>Theme : </td><td> Couleur : </td><td> Orientation :</td></tr><tr><td>"""+theme_pref+"</td><td>"+couleur_pref+"</td><td>"+orientation_prefere+"""
+           <table><tr><td>Theme : </td><td> Couleur : </td><td> Orientation :</td><td> Type :</td></tr><tr><td>"""+theme_pref+"</td><td>"+couleur_pref+"</td><td>"+orientation_prefere+"</td><td>"+type_pref+"""
            </td></tr></table></br>
            Liste de thèmes likées : </br>"""+str(dico_themes)+"""</br></br>
            Liste de couleurs likées : </br>"""+str(dico_couleur)+"""</br></br>
+           Liste des types: </br>"""+str(dico_type)+"""</br></br>
            Images likées : </br>"""+str(list_img_like)+"""</br></br>
            Imagse Unlike : </br>"""+str(list_img_unlike)+"""</br></br>
            Images à l'horizontale : """+str(orientation_H)+"""</br></br>
-           Imagse à la verticale : """+str(orientation_V)+"""</br></br>
+           Images à la verticale : """+str(orientation_V)+"""</br></br>
+        </body>
+    </html>
+    """
+    print(html)   
+    
+else :
+    print("Content-type: text/html; charset=utf-8\n")
+    html ="""
+    <html>
+        <style>
+        </style>
+        <body>
+           <h1> Bonjour Erreur, votre profil n'est pas enregistré.</h1>
         </body>
     </html>
     """
