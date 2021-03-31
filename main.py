@@ -16,7 +16,7 @@ import visu_donnees
 
 if (os.fork()) : 
     try : 
-        password = "Maxime1971"
+        password = "VotreMotDePasse"
         commande = 'python3 serveur.py'
         p = os.system('echo %s| sudo -S %s' % (password,commande))
     except :
