@@ -81,7 +81,7 @@ def donnees_profil_utilisateur(data):
     print("Fonction pas encore mise en place")
 
 def images_visu_donnees():
-    """for filename in os.listdir("Donnees_visualisees") : #Suppression des anciennes images
+    for filename in os.listdir("Donnees_visualisees") : #Suppression des anciennes images
         os.remove("Donnees_visualisees/"+filename)   
     for i in os.listdir("Images"):
         composition_image("Images/"+i)
@@ -89,7 +89,7 @@ def images_visu_donnees():
         print("Infos "+i+" synthétisées")
         
     print("Fin de synthétisation des images")
-    print("Début mise en place des graphiques")"""
+    print("Début mise en place des graphiques")
     data = json.load(open('data.json'))
     for i in data["data"][0].keys():
         for j in data["data"][0].keys():
