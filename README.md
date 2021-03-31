@@ -1,5 +1,5 @@
 # Projet Data Mining 
-###### Auteur : Philippe CHARRAT et Clément CORNU
+###### Auteurs : Philippe CHARRAT et Clément CORNU
 ###### Version : 1.1
 ###### Date : 31/03/2021
 
