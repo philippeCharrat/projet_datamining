@@ -113,7 +113,7 @@ if (profil_is_set == 1):
            Liste de couleurs likées : </br>"""+str(dico_couleur)+"""</br></br>
            Liste des types: </br>"""+str(dico_type)+"""</br></br>
            Images likées : </br>"""+str(list_img_like)+"""</br></br>
-           Imagse Unlike : </br>"""+str(list_img_unlike)+"""</br></br>
+           Images unlike : </br>"""+str(list_img_unlike)+"""</br></br>
            Images à l'horizontale : """+str(orientation_H)+"""</br></br>
            Images à la verticale : """+str(orientation_V)+"""</br></br>
         </body>
